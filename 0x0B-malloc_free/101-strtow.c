@@ -9,5 +9,5 @@
  */
 char **strtow(char *str)
 {
-	return (str);
+return (str);
 }
