@@ -1,71 +1,41 @@
 #include "main.h"
+#include <stdlib.h>
 
 /**
- * count_string - Get the size of a string.
+ * string_nconcat -  concatenates two strings.
  *
- * @string: base string.
+ * @s1: pointer to string 1 to be concatenated
+ * @s2: pointer to string 2 to be concatenated
+ * @n: number of bytes of s2 to be concatenated
  *
- * Return: pointer to a new space on memory, otherwise return NULL.
+ * Return: pointer to the string result
  */
-
-unsigned int count_string(char *string)
-{
-	int i = 0;
-
-	while (string[i])
-		i++;
-	return (i);
-}
-
-/**
- * string_nconcat - concatenates two strings.
- *
- * @s1: base string.
- *
- * @s2: complementary string.
- *
- * @n: number of characters to take of s2.
- *
- * Return: pointer to a new space on memory, otherwise return NULL.
- */
-
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	unsigned int i, size_of_s1 = 0, size_of_s2 = 0, size_of_final_string = 0;
-	int holder = n;
-	char *final_string = NULL;
+	char *tab;
+	unsigned int len1 = 0, len2 = 0, i, j;
 
-	if (s1)
-		size_of_s1 = count_string(s1);
-	if (s2)
-		size_of_s2 = count_string(s2);
+	if (s1 == NULL)
+		s1 = "";
+	while (s1[len1])
+		len1++;
 
-	if (n >= size_of_s2)
-		n = size_of_s2;
+	if (s2 == NULL)
+		s2 = "";
+	while (s2[len2])
+		len2++;
 
-	if (holder >= 0)
-		size_of_final_string = size_of_s1 + n + 1;
-	else
-		size_of_final_string = size_of_s1 + 1;
-
-	if (s1 || s2)
-		final_string = malloc(size_of_s1 + n + 1 * sizeof(char));
-	else if (!s1 && !s2)
-		final_string = malloc(1);
-
-	if (!final_string)
-	{
-		free(final_string);
+	tab = malloc(sizeof(char) * len1 + n + 1);
+	if (tab == NULL)
 		return (NULL);
-	}
 
-	for (i = 0; i < (size_of_final_string - 1); i++)
-	{
-		if (i < size_of_s1)
-			final_string[i] = s1[i];
-		else if (i >= size_of_s1)
-			final_string[i] = s2[i - size_of_s1];
-	}
-	final_string[i] = '\0';
-	return (final_string);
+	for (i = 0; i < len1; i++)
+		tab[i] = s1[i];
+
+	for (j = 0; s2[j] && j < n; j++)
+		tab[i + j] = s2[j];
+
+	tab[i + j] = '\0';
+
+	return (tab);
 }
